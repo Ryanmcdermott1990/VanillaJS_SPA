@@ -1,23 +1,21 @@
-import Component from "../Component";
+import navigate from "../Helpers/navigate";
 import uuidv4 from "../Helpers/uuid";
 
-export default function Button(text, onClick) {
-  const mountSelector = uuidv4() + "buttonMount";
-  async function mount() {
-    const buttonSelector = uuidv4() + "button";
-    const node = `<button data-UUID=${buttonSelector}>${text}</button>`;
-    const attach = document.createElement("div");
-    attach.innerHTML = node;
-    const element = attach.querySelector(`[data-UUID="${buttonSelector}"]`);
-    element.addEventListener("click", onClick);
-    return attach;
-  }
 
+export default function Button(mountPoint, callback) {
+console.log(mountPoint)
   function renderTemplate() {
-    return `<div data-UUID=${mountSelector}></div>`;
+    return new Promise(async function (myResolve) {
+      const button = {
+        target: uuidv4()
+      }
+      const attach = document.querySelector(`[data-UUID="${mountPoint}"]`);
+      attach.innerHTML = `
+                <button data-UUID=${button.target}></button>`;
+      attach.querySelector(`[data-UUID="${button.target}"]`).addEventListener('click', callback);
+      myResolve(attach);
+    });
   }
 
-  const render = new Component(mount, renderTemplate, mountSelector);
-
-  return render;
+  return renderTemplate();
 }

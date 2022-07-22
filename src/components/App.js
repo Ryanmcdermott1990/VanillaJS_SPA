@@ -1,29 +1,41 @@
-import Component from "../Component";
-import navigate from "../Helpers/navigate";
 import uuidv4 from "../Helpers/uuid";
 import Button from "./Button";
+import navigate from "../Helpers/navigate";
 
-export default function App() {
-  const mountSelector = uuidv4() + "mountPoint";
+export default function App(mountPoint) {
 
-  async function mount() {
-    // function clickFunction() {
-    //   navigate({ state: null, path: "/about" });
-    // }
-    // const nestedComp = await new Button("Go to about page", clickFunction);
-    // return nestedComp;
-  }
-
-  function renderTemplate() {
-    return `
-              <div>
+    function renderTemplate() {
+        function goToAbout() {
+            navigate({state: null, path: '/test'} )
+        }
+        return new Promise(async function (myResolve) {
+            const ButtonWrap = () => {
+                const target = uuidv4();
+                return {
+                 comp: Button,
+                 target: target
+                }
+            }
+            const button = ButtonWrap();
+            const components = [
+                button
+            ]
+            const attach = document.querySelector(`[data-UUID="${mountPoint}"]`);
+            attach.innerHTML = `
                 <h2>This is the App.js Component</h2>
-                <h4>Below is a component mounted to the custom mount-point: ${mountSelector}</h4>
-                <span data-UUID=${mountSelector}></span>
-              <div>`;
-  }
+                <h4>Below is a component mounted to the custom mount-point: ${mountPoint}</h4>
+                <span data-UUID=${button.target}></span>`;
+            components.forEach(comp => {
+                const node = attach.querySelector(`[data-UUID="${comp.target}"]`);
+                console.log(comp.target)
+                if (node){
+                    comp.comp(comp.target, goToAbout).then(replace => node.replaceWith(replace));
+                }
+            })
+            console.log("HERE", attach)
+            myResolve(attach);
+        });
+    }
 
-  const render = new Component(mount, renderTemplate, mountSelector);
-
-  return render;
+    return renderTemplate();
 }

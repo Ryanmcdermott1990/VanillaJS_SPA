@@ -4,7 +4,7 @@ import navigate from "./Helpers/navigate";
 import "./styles.css";
 
 function init() {
-  document.getElementById("app").innerHTML = `
+  document.getElementById('app').innerHTML = `
     <h1>Nested Functional Component Rendering!</h1>
     <div>
       An experiment to render functions as components in a nested fashion.
@@ -12,42 +12,45 @@ function init() {
       <strong>(No JSX needed)</strong>
     </div>
     <h3>Render:</h3>
-    <div id="content"></div>
+    <div data-UUID="content"></div>
     `;
-}
 
-async function render(component) {
-  const content = await new component();
-  if (content) {
-    const target = document.getElementById("content");
+  async function render(component) {
+    const target = document.querySelector(`[data-UUID="content"]`);
+    console.log(target);
     target.innerHTML = null;
-    target.appendChild(content);
+    if (component){
+      const content = await new component('content');
+      if (content) {
+        console.log(content);
+        target.replaceWith(content);
+      }
+    }
   }
-}
 
-function route() {
-  const routes = [
-    { path: "/", component: App },
-    { path: "/about", component: About }
-  ];
-  function listen() {
-    const mount = new Promise(async function (myResolve) {
-      window.addEventListener("popstate", (event) => {
-        const path = event.target.window.location.pathname;
-        const found = routes.find((route) => route.path === path);
-        if (found) {
-          render(found.component);
-        }
+  function route() {
+    const routes = [
+      { path: "/", component: App },
+      { path: "/about", component: About }
+    ];
+    function listen() {
+      const mount = new Promise(async function (myResolve) {
+        window.addEventListener("popstate", (event) => {
+          const path = event.target.window.location.pathname;
+          const found = routes.find((route) => route.path === path);
+            render(found?.component);
+        });
+        myResolve();
       });
-      myResolve();
+      return mount;
+    }
+
+    listen().then(() => {
+      navigate({ state: null, path: window.location.pathname });
     });
-    return mount;
   }
 
-  listen().then(() => {
-    navigate({ state: null, path: window.location.pathname });
-  });
+  route();
 }
 
 init();
-route();
