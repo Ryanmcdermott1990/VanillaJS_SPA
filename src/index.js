@@ -17,14 +17,9 @@ function init() {
 
   async function render(component) {
     const target = document.querySelector(`[data-UUID="content"]`);
-    console.log(target);
     target.innerHTML = null;
     if (component){
-      const content = await new component('content');
-      if (content) {
-        console.log(content);
-        target.replaceWith(content);
-      }
+      await new component('content');
     }
   }
 
