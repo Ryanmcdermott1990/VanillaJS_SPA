@@ -1,7 +1,32 @@
 import About from "./components/About";
 import App from "./components/App";
-import navigate from "./Helpers/navigate";
 import "./styles.css";
+import {routes} from "./Helpers/routes";
+
+export function navigate(payload) {
+  window.history.pushState(payload.state, "", payload.path);
+  getPage();
+}
+
+function getPage() {
+  document.getElementById('app').classList.add('hide');
+  const path = window.location.pathname;
+  const found = routes.find((route) => route.path === path);
+  setTimeout(() => {
+    document.getElementById('app').classList.remove('hide');
+    if (found){
+      render(found?.component);
+    }
+  }, 200)
+}
+
+async function render(component) {
+  const target = document.querySelector(`[data-UUID="content"]`);
+  target.innerHTML = null;
+  if (component){
+    await new component('content');
+  }
+}
 
 function init() {
   document.getElementById('app').innerHTML = `
@@ -12,28 +37,14 @@ function init() {
       <strong>(No JSX needed)</strong>
     </div>
     <h3>Render:</h3>
-    <div data-UUID="content"></div>
+    <div data-UUID="content" id="app"></div>
     `;
 
-  async function render(component) {
-    const target = document.querySelector(`[data-UUID="content"]`);
-    target.innerHTML = null;
-    if (component){
-      await new component('content');
-    }
-  }
-
   function route() {
-    const routes = [
-      { path: "/", component: App },
-      { path: "/about", component: About }
-    ];
     function listen() {
       const mount = new Promise(async function (myResolve) {
-        window.addEventListener("popstate", (event) => {
-          const path = event.target.window.location.pathname;
-          const found = routes.find((route) => route.path === path);
-            render(found?.component);
+        window.addEventListener("popstate", () => {
+          getPage();
         });
         myResolve();
       });
@@ -41,7 +52,7 @@ function init() {
     }
 
     listen().then(() => {
-      navigate({ state: null, path: window.location.pathname });
+      getPage();
     });
   }
 

@@ -1,3 +1,15 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: sans-serif;
+}
+
+#app {
+  opacity: 1;
+  transition: opacity ease 0.2s;
+}
+#app.hide {
+  opacity: 0;
 }
