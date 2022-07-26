@@ -2,7 +2,7 @@ import uuidv4 from "../Helpers/uuid";
 import Button from "./Button";
 import navigate from "../Helpers/navigate";
 import Component from "../Component";
-import DOMNode, {setHTML} from "../Helpers/elements";
+import DOMNode from "../Helpers/elements";
 
 export default function App(mountPoint) {
     const node = new DOMNode(mountPoint);
