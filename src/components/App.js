@@ -15,7 +15,7 @@ export default function App(mountPoint) {
     });
 
     function goToAbout() {
-        navigate({state: null, path: '/test'} )
+        navigate({state: null, path: '/about'} )
     }
 
     const renderTemplate = () => {
