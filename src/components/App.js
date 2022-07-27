@@ -4,12 +4,13 @@ import DOMNode from "../Helpers/elements";
 import Title from "./Title";
 import {navigate} from "../index";
 
-export default function App(mountPoint) {
-    this.node = new DOMNode(mountPoint, {
-        button: new Component(Button, {
+export default function App(mountPoint, transition) {
+    console.log(transition);
+    this.node = new DOMNode(mountPoint, transition, {
+        button: new Component(Button, false, {
             callBack: goToAbout, text: 'Go to about page'
         }),
-        title: new Component(Title, {
+        title: new Component(Title, false, {
             text: 'Try clicking the button below!'
         })
     });
@@ -25,9 +26,10 @@ export default function App(mountPoint) {
                 <h2>This is the App.js Component</h2>
                 <h4>Below is a component mounted to the custom mount-point: ${mountPoint}</h4>
                 <div data-UUID="${title.target}"></div>
-                <span data-UUID=${button.target}></span>`);
-            this.node.renderChildren();
-            myResolve();
+                <span data-UUID=${button.target}></span>`).then(() => {
+                this.node.renderChildren();
+                myResolve();
+            })
         });
     }
 

@@ -1,10 +1,10 @@
 import uuidv4 from "./Helpers/uuid";
 
-export default function Component(comp, data) {
+export default function Component(comp, transition, data) {
     const target = uuidv4();
-    console.log(target)
     return {
         data,
+        transition,
         component: comp,
         target: target
     }

@@ -4,12 +4,19 @@
 
 body {
   font-family: sans-serif;
+  color: #404040;
 }
 
-#app {
+.active {
   opacity: 1;
   transition: opacity ease 0.2s;
 }
-#app.hide {
+
+.hide {
   opacity: 0;
+}
+
+
+#header {
+  color: #b8b8b8;
 }
