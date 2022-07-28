@@ -2,7 +2,7 @@ import Component from "../Component";
 import DOMNode from "../Helpers/elements";
 import Title from "./Title";
 import Button from "./Button";
-import {createState} from "../Helpers/state";
+import {createState, refreshContent} from "../Helpers/state";
 
 export default function About(mountPoint, transition) {
     this.node = new DOMNode(mountPoint, transition, {
@@ -34,9 +34,10 @@ export default function About(mountPoint, transition) {
         return new Promise(async (myResolve) => {
             this.node.setHTML(`
                     <span data-UUID=${title.target}></span>
-                    <p data-state="count" content-func="stateCount">${this.expressions["stateCount"]()}</strong></p>
+                    <p state="count" template="stateCount"></strong></p>
                     <span data-UUID=${button.target}></span>
                 `).then(() => {
+                refreshContent('count', this.expressions, this.node.element)
                 this.node.renderChildren();
                 myResolve();
             })
