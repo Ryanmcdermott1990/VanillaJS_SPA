@@ -14,21 +14,19 @@ export default function About(mountPoint, transition) {
         })
     });
 
+    this.expressions = {
+        stateCount: () => `Count: <strong>${state.count}`
+    }
+
     let state = createState({
             count: 0
         },
-        () =>  {
-            const refreshElement = this.node.element.querySelector(`[data-state="count"]`);
-            refreshElement.innerHTML = contentObj[refreshElement.getAttribute('content-func')]();
-        }
+        this.expressions,
+        this.node.element
     )
 
     function changeState() {
         state.count = state.count + 1
-    }
-
-    const contentObj = {
-        stateCount: () => `Count: <strong>${state.count}`
     }
 
     const renderTemplate = () => {
@@ -36,7 +34,7 @@ export default function About(mountPoint, transition) {
         return new Promise(async (myResolve) => {
             this.node.setHTML(`
                     <span data-UUID=${title.target}></span>
-                    <p data-state="count" content-func="stateCount">${contentObj["stateCount"]()}</strong></p>
+                    <p data-state="count" content-func="stateCount">${this.expressions["stateCount"]()}</strong></p>
                     <span data-UUID=${button.target}></span>
                 `).then(() => {
                 this.node.renderChildren();
