@@ -14,8 +14,7 @@ function getPage() {
   const found = routes.filter((route) => {
     return (route.path === path || !route.exact && path.includes(route.path))
   });
-  console.log(found);
-    if (found && Array.isArray(found)){
+  if (found && Array.isArray(found)){
       const componentsArray = found.map(comp => {
         return new Component(comp?.component);
       })
