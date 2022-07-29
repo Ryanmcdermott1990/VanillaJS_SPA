@@ -11,6 +11,9 @@ export default function About(mountPoint, transition) {
         }),
         button: new Component(Button, false, {
             callBack: changeState, text: 'Increase counter'
+        }),
+        button2: new Component(Button, false, {
+            callBack: alertCount, text: 'Alert Count'
         })
     });
 
@@ -29,13 +32,18 @@ export default function About(mountPoint, transition) {
         state.count = state.count + 1
     }
 
+    function alertCount() {
+        alert(state.count);
+    }
+
     const renderTemplate = () => {
-        const {title, button} = this.node.children;
+        const {title, button, button2} = this.node.children;
         return new Promise(async (myResolve) => {
             this.node.setHTML(`
                     <span data-UUID=${title.target}></span>
                     <p state="count" template="stateCount"></strong></p>
                     <span data-UUID=${button.target}></span>
+                    <span data-UUID=${button2.target}></span>
                 `).then(() => {
                 refreshContent('count', this.expressions, this.node.element)
                 this.node.renderChildren();

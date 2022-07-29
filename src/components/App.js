@@ -5,7 +5,6 @@ import Title from "./Title";
 import {navigate} from "../index";
 
 export default function App(mountPoint, transition) {
-    console.log(transition);
     this.node = new DOMNode(mountPoint, transition, {
         button: new Component(Button, false, {
             callBack: goToAbout, text: 'Go to about page'

@@ -6,7 +6,7 @@ export default function DOMNode(mountPoint, transition, components = null) {
             this.element.classList.add('hide');
             setTimeout(() => {
                 this.element.classList.remove('hide');
-                this.element.innerHTML = markup;
+                this.element.innerHTML += markup;
                 myResolve();
             }, transition)
         } else {

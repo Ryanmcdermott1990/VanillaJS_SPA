@@ -11,18 +11,26 @@ export function navigate(payload) {
 
 function getPage() {
   const path = window.location.pathname;
-  const found = routes.find((route) => route.path === path);
-    if (found){
-      render(new Component(found?.component));
+  const found = routes.filter((route) => {
+    return (route.path === path || !route.exact && path.includes(route.path))
+  });
+  console.log(found);
+    if (found && Array.isArray(found)){
+      const componentsArray = found.map(comp => {
+        return new Component(comp?.component);
+      })
+      render(componentsArray);
     }
 }
 
-async function render(component) {
+async function render(components) {
   const target = document.querySelector(`[data-UUID="content"]`);
   target.innerHTML = null;
-  if (component.component){
-    await new component.component('content', 200);
-  }
+  components.forEach(component => {
+    if (component.component){
+      new component.component('content', 200);
+    }
+  })
 }
 
 function init() {
