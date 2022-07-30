@@ -3,6 +3,10 @@ import App from "./components/App";
 import "./styles.css";
 import {routes} from "./Helpers/routes";
 import Component from "./Component";
+import Navbar from "./components/Navbar";
+import Title from "./components/Title";
+
+
 
 export function navigate(payload) {
   window.history.pushState(payload.state, "", payload.path);
@@ -10,16 +14,32 @@ export function navigate(payload) {
 }
 
 function getPage() {
+  
+
   const path = window.location.pathname;
   const found = routes.filter((route) => {
+   
     return (route.path === path || !route.exact && path.includes(route.path))
   });
   if (found && Array.isArray(found)){
+    console.log("I am here");
       const componentsArray = found.map(comp => {
         return new Component(comp?.component);
       })
       render(componentsArray);
     }
+    else {
+      console.log("I am there");
+      navigate({state: null, path: '/'} )
+    }
+  
+}
+
+export default function Index(mountPoint, transition) {
+  this.node = new DOMNode(mountPoint, transition, {
+      app: new Component(App, false, {
+      }),
+      });
 }
 
 async function render(components) {
@@ -33,16 +53,8 @@ async function render(components) {
 }
 
 function init() {
+  // const {app} = this.node.children;
   document.getElementById('app').innerHTML = `
-    <div id="header">
-        <h1>Nested Functional Component Rendering!</h1>
-        <div>
-          An experiment to render functions as components in a nested fashion.
-          Components are rendered asynchronously to allow for the returned html to rely on computed data!
-          <strong>(No JSX needed)</strong>
-        </div>
-        <h3>Render:</h3>
-    </div>
     <div data-UUID="content" id="app"></div>
     `;
 

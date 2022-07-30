@@ -3,29 +3,30 @@ import Component from "../Component";
 import DOMNode from "../Helpers/elements";
 import Title from "./Title";
 import {navigate} from "../index";
+import Navbar from "./Navbar";
 
 export default function App(mountPoint, transition) {
     this.node = new DOMNode(mountPoint, transition, {
-        button: new Component(Button, false, {
-            callBack: goToAbout, text: 'Go to about page'
+        navbar: new Component(Navbar, false, {
         }),
         title: new Component(Title, false, {
-            text: 'Try clicking the button below!'
+            text: 'Home Page'
         })
     });
 
-    function goToAbout() {
-        navigate({state: null, path: '/about'} )
-    }
+    // function goToAbout() {
+    //     navigate({state: null, path: '/about'} )
+    // }
 
     const renderTemplate = () => {
-        const {button, title} = this.node.children;
+        const {navbar, title} = this.node.children;
+        console.log(navbar);
+        console.log(navbar.target);
         return new Promise(async (myResolve) => {
+            console.log("this is this", this)
             this.node.setHTML(`
-                <h2>This is the App.js Component</h2>
-                <h4>Below is a component mounted to the custom mount-point: ${mountPoint}</h4>
-                <div data-UUID="${title.target}"></div>
-                <span data-UUID=${button.target}></span>`).then(() => {
+                <h1 data-UUID=${title.target}></h1>
+                <span data-UUID=${navbar.target}></span>`).then(() => {
                 this.node.renderChildren();
                 myResolve();
             })
