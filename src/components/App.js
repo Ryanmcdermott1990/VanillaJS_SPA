@@ -34,4 +34,9 @@ export default function App(mountPoint, transition) {
     }
 
     return renderTemplate();
+    
 }
+
+
+
+

@@ -6,8 +6,6 @@ import Component from "./Component";
 import Navbar from "./components/Navbar";
 import Title from "./components/Title";
 
-
-
 export function navigate(payload) {
   window.history.pushState(payload.state, "", payload.path);
   getPage();
@@ -15,31 +13,24 @@ export function navigate(payload) {
 
 function getPage() {
   
-
   const path = window.location.pathname;
   const found = routes.filter((route) => {
    
     return (route.path === path || !route.exact && path.includes(route.path))
   });
-  if (found && Array.isArray(found)){
+  if (found && Array.isArray(found) && found.length > 0){
     console.log("I am here");
+    console.log(found)
       const componentsArray = found.map(comp => {
         return new Component(comp?.component);
       })
       render(componentsArray);
     }
-    else {
+    else  {
       console.log("I am there");
       navigate({state: null, path: '/'} )
     }
   
-}
-
-export default function Index(mountPoint, transition) {
-  this.node = new DOMNode(mountPoint, transition, {
-      app: new Component(App, false, {
-      }),
-      });
 }
 
 async function render(components) {
