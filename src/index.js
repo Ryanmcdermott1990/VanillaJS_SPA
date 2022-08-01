@@ -49,6 +49,8 @@ function init() {
     <div data-UUID="content" id="app"></div>
     `;
 
+ 
+
   function route() {
     function listen() {
       const mount = new Promise(async function (myResolve) {

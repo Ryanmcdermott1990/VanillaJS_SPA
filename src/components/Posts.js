@@ -17,12 +17,52 @@ export default function Posts(mountPoint, transition) {
         }),
     });
 
+    function makeRequest() {
+
+        let req = 'http://localhost:8000/api/posts'
+        
+        fetch(req).then ((response) => {
+            console.log('resolved', response);
+            return response.json();
+        
+        }).then(data => {
+        console.log(data);
+
+        }).catch((err) => {
+        console.log('rejected', err);
+        });
+        
+        }
+
+    makeRequest();
+
+
     const renderTemplate = () => {
-        const {title, button, button2, navbar} = this.node.children;
+        const {title, button, button2, navbar, data} = this.node.children;
         return new Promise(async (myResolve) => {
             this.node.setHTML(`
-                    <h1 data-UUID=${title.target}></h1>
-                    <span data-UUID=${navbar.target}></span>
+            <h1 data-UUID=${title.target}></h1>
+            <span data-UUID=${navbar.target}></span>
+            <table class="table" id="foo">
+                <thead>
+                    <th>${data[0].id}</th>
+                    <th>Title</th>
+                    <th>Slug</th>
+                    <th>Content</th>
+                    <th>Likes</th>
+                    <th>Created-At</th>
+                    <th>Updated-At</th>
+                </thead>
+                <tbody>
+                <tbody>
+            </table>
+
+                <template id="dataRow">
+                <tr>
+
+                </tr>
+            </template>
+
                 `).then(() => {
                 refreshContent('count', this.expressions, this.node.element)
                 this.node.renderChildren();
