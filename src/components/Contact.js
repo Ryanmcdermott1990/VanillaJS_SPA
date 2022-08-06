@@ -21,8 +21,7 @@ export default function Contact(mountPoint, transition) {
         const {title, button, button2, navbar} = this.node.children;
         return new Promise(async (myResolve) => {
             this.node.setHTML(`
-                    <h1 data-UUID=${title.target}></h1>
-                    <span data-UUID=${navbar.target}></span>
+                    <h3 data-UUID=${title.target}></h3>
                 `).then(() => {
                 refreshContent('count', this.expressions, this.node.element)
                 this.node.renderChildren();

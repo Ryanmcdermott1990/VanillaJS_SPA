@@ -19,35 +19,44 @@ function getPage() {
     return (route.path === path || !route.exact && path.includes(route.path))
   });
   if (found && Array.isArray(found) && found.length > 0){
-    console.log("I am here");
-    console.log(found)
       const componentsArray = found.map(comp => {
-        return new Component(comp?.component);
-      })
+        return {create: new Component(comp?.component), mountPoint: comp.mountPoint};
+        })
       render(componentsArray);
     }
     else  {
       console.log("I am there");
       navigate({state: null, path: '/'} )
     }
+  }
   
-}
 
 async function render(components) {
-  const target = document.querySelector(`[data-UUID="content"]`);
+components.forEach(component => {
+let mount = 'content';
+if (component.mountPoint)
+{
+  mount = component.mountPoint;
+}
+
+  const target = document.querySelector(`[data-UUID=${mount}]`);
   target.innerHTML = null;
-  components.forEach(component => {
-    if (component.component){
-      new component.component('content', 200);
+    if (component.create.component){
+      new component.create.component(mount, 200);
     }
-  })
+})
 }
 
 function init() {
   // const {app} = this.node.children;
   document.getElementById('app').innerHTML = `
+  <h1>Personal SPA</h1> 
+  <div data-UUID="static"></div>
     <div data-UUID="content" id="app"></div>
     `;
+
+    render([{mountPoint: 'static', create: new Component(Navbar, false)}])
+
 
  
 

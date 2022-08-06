@@ -25,8 +25,8 @@ export default function App(mountPoint, transition) {
         return new Promise(async (myResolve) => {
             console.log("this is this", this)
             this.node.setHTML(`
-                <h1 data-UUID=${title.target}></h1>
-                <span data-UUID=${navbar.target}></span>`).then(() => {
+                <h3 data-UUID=${title.target}></h3>
+                `).then(() => {
                 this.node.renderChildren();
                 myResolve();
             })

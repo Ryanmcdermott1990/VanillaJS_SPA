@@ -12,6 +12,7 @@ export const refreshContent = (state, expressions, template) => {
     const refreshElements = template.querySelectorAll(`[state="${state}"]`);
     if (refreshElements) {
         refreshElements.forEach(element => {
+            console.log(element);
             element.innerHTML = expressions[element.getAttribute('template')]();
         })
     }

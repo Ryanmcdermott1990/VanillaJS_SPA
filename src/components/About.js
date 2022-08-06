@@ -44,8 +44,7 @@ export default function About(mountPoint, transition) {
         const {title, button, button2, navbar} = this.node.children;
         return new Promise(async (myResolve) => {
             this.node.setHTML(`
-                    <h1 data-UUID=${title.target}></h1>
-                    <span data-UUID=${navbar.target}></span>
+                    <h3 data-UUID=${title.target}></h3>
                     <p state="count" template="stateCount"></strong></p>
                     <span data-UUID=${button.target}></span>
                     <span data-UUID=${button2.target}></span>
