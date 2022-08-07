@@ -50,7 +50,6 @@ export default function Table(mountPoint, transition, data) {
 
             }  
  
-    
         const renderTemplate = () => {
             return new Promise(async (myResolve) => {
                 this.node.setHTML(`
@@ -67,44 +66,3 @@ export default function Table(mountPoint, transition, data) {
     
         return renderTemplate();
     }
-
-
-        
-        // Defining async function
-
-        
-        // // Function to hide the loader
-        // function hideloader() {
-        // document.getElementById('loading').style.display = 'none';
-        // }
-        
-        
-        // Function to define innerHTML for HTML table
-        // function show(data) {
-        // let tab = 
-        //   `<tr>
-        //   <th>ID</th>
-        //   <th>Title</th>
-        //   <th>Slug</th>
-        //   <th>Content</th>
-        //   <th>Likes</th>
-        //   <th>Created-At</th>
-        //   <th>Updated-At</th>
-        //    </tr>`;
-        
-        // // Loop to access all rows 
-        // for (let r of data) {
-        // `<tr> 
-        // <td>${r.id} </td>
-        // <td>${r.Title}</td>
-        // <td>${r.Slug}</td> 
-        // <td>${r.Content}</td> 
-        // <td>${r.Likes}</td> 
-        // <td>${r.Created-At}</td> 
-        // <td>${r.Updated-At}</td>          
-        // </tr>`;
-        // }
-        // // Setting innerHTML as tab variable
-        // document.getElementById('table').innerHTML = tab;
-        // }
-
