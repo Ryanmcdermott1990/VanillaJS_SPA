@@ -2,7 +2,7 @@ import Button from "./Button";
 import Component from "../Component";
 import DOMNode from "../Helpers/elements";
 import Title from "./Title";
-import {navigate} from "../index";
+import { navigate } from "../index";
 import Navbar from "./Navbar";
 
 export default function App(mountPoint, transition) {
@@ -14,12 +14,8 @@ export default function App(mountPoint, transition) {
         })
     });
 
-    // function goToAbout() {
-    //     navigate({state: null, path: '/about'} )
-    // }
-
     const renderTemplate = () => {
-        const {navbar, title} = this.node.children;
+        const { navbar, title } = this.node.children;
         console.log(navbar);
         console.log(navbar.target);
         return new Promise(async (myResolve) => {
@@ -34,7 +30,7 @@ export default function App(mountPoint, transition) {
     }
 
     return renderTemplate();
-    
+
 }
 
 

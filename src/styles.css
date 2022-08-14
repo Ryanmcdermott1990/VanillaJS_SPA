@@ -20,3 +20,21 @@ body {
 #header {
   color: #b8b8b8;
 }
+
+table {
+
+  border-collapse: collapse !important;
+  border-radius: 10px !important;
+  background-color: #ccf4f4;
+  
+}
+
+td, tr {
+
+  border: 5px, solid, red !important;
+ 
+}
+
+.searchContainer {
+  padding-bottom: 1.5em;
+}
